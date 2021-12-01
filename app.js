@@ -17,9 +17,46 @@ function delTasks(event) {
    }
    removeAllStorage()
 }
-// RemoveALlstorage
+// RemoveAll storage
 function removeAllStorage(){
     localStorage.removeItem("tasks")
+}
+
+
+// Page reload
+document.addEventListener("DOMContentLoaded", getTasks)
+
+
+// GetTasks
+function getTasks(){
+    // Get data from LS
+    let tasks
+    if(localStorage.getItem("tasks") === null){
+        tasks = []
+    } else{
+        tasks = JSON.parse(localStorage.getItem("tasks"))
+    }
+    // for each task in tasks - create li and add to tasklist
+    tasks.forEach(function (taskfromLS){
+        const li = document.createElement("li")
+        // Add CSS class
+        li.className = "collection-item"
+        // Add text to element
+        const text = document.createTextNode(taskfromLS)
+        li.appendChild(text)
+        // Create link
+        const link = document.createElement("a")
+        // Add CSS style
+        link.className = "secondary-content"
+        // Add text
+        link.appendChild(document.createTextNode("X"))
+        // Add href attribute
+        link.setAttribute("href", "#")
+        // Add link to Li
+        li.appendChild(link)
+        // Add li to taskList
+        taskList.appendChild(li)
+    })
 }
 
 
