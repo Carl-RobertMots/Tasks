@@ -52,9 +52,21 @@ function addTask(event) {
     li.appendChild(link)
     // Add li to taskList
     taskList.appendChild(li)
+    // Save task to local storage
+    taskStorage(task)
     // clear form input value
     document.querySelector("#task").value = ""
     event.preventDefault()
 
 }
-
+//local storage salvestamine
+function taskStorage(task){
+    let tasks
+    if(localStorage.getItem("tasks") === null){
+        tasks = []
+    } else{
+        tasks = JSON.parse(localStorage.getItem("tasks"))
+    }
+    tasks.push(task)
+    localStorage.setItem("tasks", JSON.stringify(tasks))
+}
