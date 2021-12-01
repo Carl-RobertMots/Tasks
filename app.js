@@ -22,9 +22,28 @@ function delTask(event) {
     if(event.target.textContent === "X") {
         if(confirm("ARE U SURE ABOUT DELETING THAT?")){
             event.target.parentElement.remove()
+            let task = event.target.parentElement.textContent.slice(0, -1)
+            removeStorage(task)
         }
     }
 }
+// Remove storage
+function removeStorage(task){
+    let tasks
+    if(localStorage.getItem("tasks") === null){
+        tasks = []
+    } else{
+        tasks = JSON.parse(localStorage.getItem("tasks"))
+    }
+    tasks.forEach(function(taskFromLS, taskIndex){
+        if(taskFromLS === task){
+            tasks.splice(taskIndex, 1)
+        }
+    })
+
+    localStorage.setItem("tasks", JSON.stringify(tasks))
+}
+
 
 // addTask function
 function addTask(event) {
